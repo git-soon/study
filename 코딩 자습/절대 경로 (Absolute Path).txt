@@ -1,0 +1,69 @@
+절대 경로 (Absolute Path)
+정의: 시스템의 최상위 디렉토리부터 시작하여 파일이나 디렉토리까지의 전체 경로를 나타냅니다.
+
+예시:
+예를 들어, 파일이 C:\Users\username\project\file.txt 위치에 있다면 Git에서 절대 경로를 사용하여 추가할 수 있습니다.
+
+bash
+복사
+편집
+git add C:\Users\username\project\file.txt
+특징:
+
+어떤 위치에서 명령을 실행해도 항상 같은 파일을 가리킵니다.
+
+단, 경로가 길어지고, 다른 시스템에서는 경로가 달라질 수 있으므로 협업 시 주의가 필요합니다.
+
+상대 경로 (Relative Path)
+정의: 현재 작업 중인 디렉토리를 기준으로 파일이나 디렉토리까지의 경로를 나타냅니다.
+
+예시:
+만약 현재 커맨드 라인이 C:\Users\username\project 디렉토리에 위치해 있다면,
+
+bash
+복사
+편집
+git add file.txt
+로 파일을 추가할 수 있습니다.
+또는, 만약 현재 C:\Users\username\project\src 디렉토리에 있을 때 상위 폴더의 파일을 추가하려면:
+
+bash
+복사
+편집
+git add ..\config.json
+특징:
+
+작업 중인 디렉토리를 기준으로 경로를 지정하므로, 프로젝트 내에서는 경로가 간결해집니다.
+
+다른 팀원들과 협업할 때, 상대 경로를 사용하면 각자의 환경에서 동일하게 동작할 가능성이 높습니다.
+
+실무 예시 정리
+프로젝트 루트 디렉토리에서 작업하는 경우:
+
+현재 디렉토리가 C:\Users\username\project일 때, README.md 파일을 추가하려면:
+
+bash
+복사
+편집
+git add README.md
+절대 경로를 사용할 경우:
+
+bash
+복사
+편집
+git add C:\Users\username\project\README.md
+서브 디렉토리에서 작업하는 경우:
+
+현재 디렉토리가 C:\Users\username\project\src일 때, 상위 디렉토리의 config.json 파일을 추가하려면:
+
+bash
+복사
+편집
+git add ..\config.json
+같은 디렉토리 내의 파일을 추가할 때는:
+
+bash
+복사
+편집
+git add main.py
+이처럼 윈도우 환경에서도 절대 경로와 상대 경로의 개념은 동일하며, 작업 위치에 따라 편리하게 사용할 수 있습니다.

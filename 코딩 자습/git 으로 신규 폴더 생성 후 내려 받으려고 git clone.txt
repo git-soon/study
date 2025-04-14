@@ -1,0 +1,29 @@
+git 으로 신규 폴더 생성 후 내려 받으려고 git clone https://github.com/git-soon/git-test.git . 이렇게 작성하니
+ fatal: destination path '.' already exists and is not an empty directory. 이런 오류가 떠 어떻게 해야해?
+
+
+ChatGPT
+
+이 오류는 현재 디렉토리가 비어있지 않기 때문에 발생합니다. git clone 명령은 기본적으로 빈 디렉토리에만 클론을 허용합니다.
+
+해결 방법은 두 가지가 있습니다:
+
+1. 빈 디렉토리에서 클론하기:
+클론하고자 하는 디렉토리가 비어있도록 기존 파일이나 폴더를 제거하거나, 새로운 빈 폴더를 만들어 그 안에서 클론합니다.
+예를 들어,
+
+-bash-
+
+mkdir new-folder
+cd new-folder
+git clone https://github.com/git-soon/git-test.git .
+
+다른 디렉토리 이름 지정:
+현재 디렉토리가 비어있지 않다면, 클론할 때 대상 디렉토리 이름을 지정할 수 있습니다. 이 경우 Git은 자동으로 해당 이름의 폴더를 생성합니다.
+예를 들어,
+
+-bash-
+
+git clone https://github.com/git-soon/git-test.git git-test
+
+이렇게 하면 현재 디렉토리 안에 git-test라는 새 폴더가 생성되고 그 안에 클론이 진행됩니다.

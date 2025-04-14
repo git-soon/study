@@ -1,0 +1,105 @@
+#함수 - **kwargs
+
+def kwargs(**kwargs):
+    return print(**kwargs)
+
+kwargs(a=1, b=2, c=3, d=4, e=5, f=6, g=7)
+
+1. 코드 분석
+	def kwargs(**kwargs):
+이 함수는 가변 키워드 인자(**kwargs)를 받아. **kwargs는 키워드 인자를 딕셔너리로 묶어서 함수 내부로 전달해.
+	
+예: kwargs(a=1, b=2)를 호출하면 kwargs는 {'a': 1, 'b': 2}라는 딕셔너리를 받음.
+
+	return print(**kwargs):
+
+여기서 **kwargs는 딕셔너리를 언패킹(unpacking)해서 키워드 인자로 print() 함수에 전달해.
+즉, kwargs={'a': 1, 'b': 2, 'c': 3, ...}라면, print(**kwargs)는 print(a=1, b=2, c=3, ...)처럼 호출되는 셈이야.
+
+	호출: kwargs(a=1, b=2, c=3, d=4, e=5, f=6, g=7)
+이건 kwargs 함수에 a=1, b=2, ... 같은 키워드 인자를 전달하고, 그걸 print()에 그대로 넘기는 구조야.
+
+
+2. 에러 원인
+print() 함수는 모든 키워드 인자를 받아들이지 않아. print()가 지원하는 키워드 인자는 다음과 같아:
+
+sep: 값 사이 구분자
+end: 출력 끝 문자
+file: 출력 대상 파일
+flush: 버퍼 플러시 여부
+
+하지만 네가 전달한 a=1, b=2, c=3, ... 같은 키워드들은 print()가 이해할 수 없는 인자야. 그래서 TypeError: print() got an unexpected keyword argument 'a' 같은 에러가 발생한 거야.
+
+구체적으로:
+
+print(**kwargs)는 print(a=1, b=2, c=3, d=4, e=5, f=6, g=7)로 풀리고,
+print()는 a, b, c 등을 처리할 방법이 없어서 에러를 뱉어.
+
+
+3. 해결 방법
+이 에러를 해결하려면 네 의도에 따라 코드를 수정해야 해. print(**kwargs)를 쓰는 대신, kwargs 딕셔너리를 어떻게 다룰지 명확히 정해야 해. 몇 가지 가능성을 제안해볼게:
+
+(1) kwargs 내용을 출력하고 싶었다면
+만약 kwargs에 담긴 키-값 쌍을 출력하고 싶었다면, print(**kwargs) 대신 print(kwargs)를 써야 해:
+
+	def kwargs(**kwargs):
+	    return print(kwargs)
+
+	kwargs(a=1, b=2, c=3, d=4, e=5, f=6, g=7)
+
+출력: {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
+설명: print(kwargs)는 딕셔너리 자체를 출력해. **kwargs로 언패킹하지 않았기 때문에 에러 없이 동작해.
+
+
+(2) 키워드 인자를 개별적으로 출력하고 싶었다면
+키나 값만 따로 출력하려면:
+
+
+def kwargs(**kwargs):
+    return print(*kwargs.keys())  # 키만 출력
+    # 또는 return print(*kwargs.values())  # 값만 출력
+
+kwargs(a=1, b=2, c=3, d=4, e=5, f=6, g=7)
+
+출력 (키): a b c d e f g
+출력 (값): 1 2 3 4 5 6 7
+설명: *kwargs.keys()나 *kwargs.values()로 딕셔너리의 키나 값을 풀어서 print()에 전달해.
+
+(3) print()의 키워드 인자를 사용하고 싶었다면
+print()의 올바른 키워드 인자만 전달하도록 제한해야 해:
+
+	def kwargs(**kwargs):
+    		return print("Hello", sep=" ", end="\n", **kwargs)  # 유효한 키워드만 사용
+
+	kwargs(sep="-")  # 정상 작동
+	# kwargs(a=1)  # 여전히 에러 발생
+
+출력: Hello (기본 동작이지만 sep 같은 걸 조정 가능)
+설명: print()가 이해할 수 있는 키워드만 전달해야 해.
+
+
+(4) 아무 수정 없이 동작 확인하고 싶었다면
+
+네 원래 의도가 kwargs를 다른 방식으로 다루는 거였다면, print(**kwargs) 대신 뭘 하려 했는지 알려줘. 예를 들어, 딕셔너리를 그대로 반환하고 싶었다면:
+
+	def kwargs(**kwargs):
+    		return kwargs  # 딕셔너리 반환
+
+	result = kwargs(a=1, b=2, c=3, d=4, e=5, f=6, g=7)
+print(result)
+출력: {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5, 'f': 6, 'g': 7}
+4. 추가 참고: return print()의 의미
+네 코드에서 return print(**kwargs)를 썼는데, print()는 값을 출력하고 None을 반환해. 그래서 return print(...)는 항상 None을 반환하게 돼. 이게 의도한 거라면 괜찮지만, 만약 출력값을 반환하고 싶었다면 print() 대신 다른 로직을 써야 해.
+
+예:
+	def kwargs(**kwargs):
+    		print(**kwargs)  # None 반환
+    		return "Something else"  # 명시적 반환
+
+	result = kwargs(a=1)  # 에러 발생
+
+5. 결론
+
+에러 원인: print(**kwargs)가 print(a=1, b=2, ...)로 풀리면서 print()가 모르는 키워드 인자(a, b 등)를 받았기 때문.
+해결법: print(kwargs)로 딕셔너리 출력하거나, *kwargs.keys()/values()로 키/값을 풀어서 출력하거나, 의도를 명확히 해서 코드를 수정해.
+
