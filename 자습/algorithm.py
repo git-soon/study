@@ -76,22 +76,25 @@ print('1: ' + str(r1))
 
 # 6. 종료
 # 위 방식으로만 하면 제품 가격보다 적은 돈을 넣으면 - 오류 발생
+# 위 방식으로 하면 스트링 입력시 - 오류 발생
 
-# # 위 코드를 반복문을 사용하여 보다 직관적으로 만들기
 
-# #1. 시작
-# change_list = [5000, 1000, 500, 100, 50, 10, 5, 1]
+# 위 코드를 반복문을 사용하여 보다 직관적으로 만들기
 
-# # 2. 투입금액
-# insert_price = input("insert : ")
+# 1. 시작
+change_list = [5000, 1000, 500, 100, 50, 10, 5, 1]
 
-# # 3. 상품 금액
-# product_price = input("product : ")
+# 2. 투입금액
+insert_price = input("insert : ")
 
-# # 4. 거스름돈 계산
-# change = int(insert_price - product_price)
+# 3. 상품 금액
+product_price = input("product : ")
 
-# for i in change_list:
-#     r = change_list//i
-#     change %= i
-#     print(str(i) + ':' + str(r))
+# 4. 거스름돈 계산
+change = int(insert_price - product_price)
+
+for i in change_list:
+    r = change_list//i
+    change %= i
+    print(str(i) + ':' + str(r))
+# 위 코드와 동일한 오류 발생

@@ -1,0 +1,48 @@
+웹 스크래핑 공부 시작
+
+<li> = 태그
+<li class = "편제웅"> = li태그 편제웅 클래스
+<li id = "orange" class = "편제웅"> = li태그 오렌지 아이디 편제웅 클래스
+
+
+	
+
+conda env list = 가상환경 조회
+
+python --version = 파이썬 지금 버전을 확인
+
+conda activate 파일 이름 = 그 파일에 적용되어있는 버전으로 적용됨
+
+conda deactivate  = 바꿔진 환경을 다시 되돌림
+
+conda activate base : 베이스에 있는 걸로 바꿈
+
+
+ex)
+https://search.naver.com/search.naver?where=news&quert=편제웅
+
+웹에서 
+https://  = 프로토콜
+
+search.naver.com/ = 도메인(=IP 주소에 이름을 준 것) [ /나오기 전까지가]
+
+search.naver? = path(서버에서 해당 페이지 경로)
+
+?뒤에가 Parameter : 서버에 추가적인 정보를 제공하기 위해서 사용
+	where=news&query=편제웅 : key 와 벨류
+key : where, query
+
+value : news, 편제웅
+
+import requests
+from bs4 import BeautifulSoup	# BeautifulSoup : 	데이터를 쉽게 찾아내고 추출할 수 있게 해주는 라이브러리
+
+url = "https://www.seoul.go.kr/main/index.jsp" 		# 크롤링 하려는 주소 변수에 담기
+response = requests.get(url)					# 파이썬 get() = 딕셔너리 키값 뽑아주는거, 여기서 get()은 requests.get() 이라 아예 다른거다 = HTML 태그 안의 텍스트만 꺼내주는 역할
+html = BeautifulSoup(response.text, 'html.parser')	#response.text: 웹페이지의 HTML 코드 문자열을  BeautifulSoup 객체로 파싱 
+# print(html)							#파싱(parsing)은 구조화된 문서(HTML, JSON 등)를 프로그래밍적으로 읽고 쓸 수 있는 형태로 분석하는 과정
+
+# html.select('a')							
+first_li = html.select_one("li.public")				#li.public : li = 태그 , .public = 클래스 따라서; li 태그에 class가 public 인 인자를 담겠다 라는뜻
+print(first_li)
+

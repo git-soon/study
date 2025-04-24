@@ -1,0 +1,32 @@
+while 예제
+
+while True:
+    user_input = input("양수를 입력하세요 ('종료' 입력 시 프로그램 종료) :")
+
+    if user_input == "종료":
+        break
+
+    if not user_input.isdigit():
+        print("양수만 입력하세요.")
+        continue
+
+    # 입력된 숫자를 정수로 변환
+    number = int(user_input)
+
+    if number == 0:
+        continue
+
+    # 1부터 n까지의 합 계산
+    i = 1
+    total = 0
+    while i <= number:
+        total += i
+        i += 1
+    print(f'1부터 {number}까지의 합은 {total} 입니다.')
+
+
+
+
+
+
+
