@@ -1,0 +1,3 @@
+# API 키나 DB 비밀번호가 담긴 파일은 절대 커밋하지 않기
+kakao_config.json
+db_config.json
